@@ -1,0 +1,46 @@
+﻿dizajn.css 
+
+body { background-color:Yellow;} 
+h1{ color:Blue; text-align:center;} 
+
+Pocetna.aspx.cs
+using System; 
+using System.Web.UI; 
+using System.Data.SqlClient; 
+
+namespace KnjigaUtisaka{    
+public partial class Pocetna : System.Web.UI.Page{       
+ 
+SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-20VLH4G\SQLEXPRESS;Initial Catalog=KnjigaUtisaka;Integrated Security=True");        
+protected void Page_Load(object sender, EventArgs e){}
+
+ protected void btnDodaj_Click(object sender, EventArgs e){
+if (Page.IsValid){
+try{
+con.Open();
+string k = "INSERT INTO Utisak(Ime,Email,Komentar) values ('"k += txtIme.Text + "','" + txtEmail.Text + "','" + txtKomentar.Text + "')";                    SqlCommand cmd = new SqlCommand(k, con);
+cmd.ExecuteNonQuery();
+lblPoruka.Text = "Успешан упис у базу!";
+}
+catch(Exception x)
+{
+lblPoruka.Text = "Грешка! " + x.Message;
+}
+                
+finally{con.Close();}
+}}}}
+
+
+
+Приликом креирања базе “KnjigaUtisaka” у SQL сервер менаџмент студију, потребно је наместити у 
+General, Maintance, Collation да буде  
+Cyrilic_General_CI_AI (изабере се из листе), 
+да би омогућили упис ћириличних слова у базу...
+
+
+
+KORISTE SE VALIDATORI...
+REQUIREDFIELD Validator
+regularEXPRESSION validator
+REQUIREDFIELD Validator
+validation summary

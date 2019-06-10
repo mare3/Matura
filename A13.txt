@@ -1,0 +1,79 @@
+﻿dizajn.css 
+
+body{ background-color: lavender;} 
+h1 {color: Blue; text-align: center;} 
+img{width:200px; height:200px}
+
+Katalog.aspx.cs
+using System; 
+using System.Collections.Generic; 
+using System.IO; 
+using System.Web.UI.WebControls; 
+namespace А13CDKatalog{    
+public partial class Katalog : System.Web.UI.Page{   
+     protected void Page_Load(object sender, EventArgs e){            
+if (!IsPostBack){            
+StreamReader f = new StreamReader(Server.MapPath("katalog.txt"));                
+List<CD> sviCDovi = CD.procitaj(f);                
+foreach (CD k in sviCDovi){//попуни ddlGodina са свим местима                   
+ if (!ddlGodina.Items.Contains(new ListItem(k.godina.ToString()))) 
+ddlGodina.Items.Add(k.godina.ToString());               
+ }                f.Close();      } }       
+
+ protected void btnTrazi_Click(object sender, EventArgs e){
+ StreamReader f = new StreamReader(Server.MapPath("katalog.txt"));           
+ List<CD> sviCDovi = CD.procitaj(f);            
+List<CD> izabraniCDovi = new List<CD>();
+ foreach (CD k in sviCDovi)
+{
+if ((txtIzvodjac.Text == "" || k.izvodjac.Contains(txtIzvodjac.Text)) &&
+ (txtAlbum.Text == "" || k.album.Contains(txtAlbum.Text)) && 
+(ddlZanr.SelectedValue == "сви жанрови" || (k.zanr.Contains(ddlZanr.SelectedValue)))&& 
+(ddlGodina.SelectedValue == "све године" || (k.godina.ToString() == ddlGodina.SelectedValue))&& 
+(txtIzdavac.Text == "" || k.izdavac.Contains(txtIzdavac.Text)))  
+              {                   
+ izabraniCDovi.Add(k);        
+        }            }         
+   f.Close();
+            gvIzabrani.DataSource = izabraniCDovi;
+gvIzabrani.DataBind();} } }
+
+CD.cs 
+
+using System; 
+using System.Collections.Generic; 
+using System.IO; 
+namespace А13CDKatalog{   
+ public class CD{
+public string izvodjac { get; set; }        
+public string album { get; set; }        
+public string zanr { get; set; }        
+public int godina { get; set; }        
+public string izdavac { get; set; }        
+public string slika { get; set; }        
+public CD(string izvodjac, string album, string zanr, int godina, string izdavac, string slika)
+{            
+this.izvodjac = izvodjac;            
+this.album = album;            
+this.zanr = zanr;            
+this.godina = godina;           
+this.izdavac = izdavac;            
+this.slika = slika;        
+}        
+public static List<CD> procitaj(StreamReader f){           
+ List<CD> sviKorisnici = new List<CD>();            
+while (!f.EndOfStream){               
+ string[] sviPodaci = f.ReadLine().Split('|');               
+ CD k = new CD(sviPodaci[0], sviPodaci[1], sviPodaci[2],                        
+Convert.ToInt32(sviPodaci[3]), sviPodaci[4], sviPodaci[5]);                
+sviKorisnici.Add(k);     
+       }           
+ return sviKorisnici;     
+   }    } } 
+
+katalog  .txt 
+Рибља чорба|Бувља пијаца|поп,рок|1982|ПГП-РТБ|~/slike/Riblja_corba-Buvlja_pijaca.jpg 
+Бијело дугме|Шта би дао да си на мом мјесту|рок|1975|Југотон| ~/slike/Sta_bi_dao_da_si_na_mom_mjestu_(Bijelo_dugme).jpg 
+Бајага|Са друге стране јастука|поп,рок,џез|1985|ПГП-РТБ|~/slike/Sa_druge_strane_jastuka.jpg 
+Madonna|Madonna|денс|1983|Warner. Bros|~/slike/Madonna_(album).jpg Madonna|Like a Virgin|денс-поп,рок,електроника|1984|Warner. Bros|~/slike/Like_a_Virgin.jpg George Michael|Faith|поп,фанк,соул|1987|Columbia, Epic|~/slike/GeorgeMichaelFaithAlbumcover.jpg 
+George Michael|Listen Without Prejudice, Vol. 1|поп,рок|1990|Columbia| ~/slike/Listen_Without_Prejudice,_Vol._1_(album_cover).jpg

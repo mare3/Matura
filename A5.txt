@@ -1,0 +1,118 @@
+﻿index.html 
+
+<!DOCTYPE html>
+ <html>
+ <head>   
+ <title>Резервација аутобуских карата</title>   
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8" >  
+  <link rel="stylesheet" type="text/css" href="css/stilovi.css"/>    
+<script type="text/javascript" src="js/funkcionalnost.js"></script> 
+</head> 
+<body onload="kreirajSedista()">  
+  <header>    
+   <h1>Резервација аутобуских карата</h1>    
+</header>    
+<table id="tabela"></table>    
+<form action="mailto:autobus@gmail.com" method="post">        
+Број седишта: <input type="text" id="broj" />     
+   <br/><br/>      
+  Име и презиме: <input type="text"/>  <br/><br/>   
+  E-mail: <input type="email"/>        <br/><br/>        
+<input type="submit" id="posalji" value="Пошаљи" onclick="obojSediste()" />   
+ </form>  
+  <nav>    
+    <a href="autor.html">О аутору</a><br/>   
+     <a href="uputstvo.html">Упутство</a><br>  
+  </nav> 
+</body> 
+</html> 
+
+funkcionalnost.js 
+
+function kreirajSedista()
+{
+ var br=2;
+while(br<=52)
+{var red=document.createElement('tr'); 
+document.getElementById("tabela").appendChild(red);
+for(var i=0;i<4;i++)
+{ 
+if(br>52) return; 
+//крај рада функције за "седиште 53" 
+var dugme=document.createElement('button');
+//ново седиште 
+dugme.innerHTML=br;
+//упис броја седишта на дугмић 
+dugme.setAttribute("class","sediste");
+//ознака класе 
+dugme.setAttribute("id",br);
+//број седишта је id дугмића 
+dugme.setAttribute("onclick","klik("+br+")");
+red.appendChild(dugme);
+//додавање дугмића у ред седишта 
+br++;} } } 
+function klik(br){
+//када се кликне на неко "седиште" у табели...    
+document.getElementById("broj").value=br; } 
+function obojSediste()
+{var brSedista=document.getElementById("broj").value;
+ document.getElementById(brSedista).style.backgroundColor="red";
+document.getElementById(brSedista).disabled=true;} 
+
+autor.html 
+
+<!DOCTYPE html> 
+<html> 
+<head>   
+ <title>Аутор</title>  
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" >  
+  <link rel="stylesheet" type="text/css" href="css/stilovi.css"> 
+</head>
+ <body>  
+  <header>     
+   <h1>О аутору</h1><br>
+    </header>  
+  <section>      
+  <p class="uputstvo"> Назив веб апликације: "Резервација аутобуских карата" <br> Аутор: Пера Петровић<br> Школа: Електротехничка школа "Земун"<br> Е-маил: perapetrovic@gmail.com <br> Датум: 27.јун 2016. године     
+   </p>    
+</section>  
+  <nav>     
+   <a href="index.html">Почетна</a><br>  
+      <a href="uputstvo.html">Упутство</a><br>    
+</nav> 
+</body> 
+</html> 
+
+uputstvo.html 
+
+<!DOCTYPE html>
+ <html> 
+<head>  
+  <title>Упутство</title>   
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8" >   
+ <link rel="stylesheet" type="text/css" href="css/stilovi.css">
+ </head>
+ <body>  
+  <header>      
+  <h1>Упутство за коришћење веб апликације "Резервација аутобуских карата"</h1><br>   
+ </header> 
+   <section>     
+   <p class="uputstvo">   Функционалност апликације "Резервација аутобуских карата":<br> При стартовању апликације, "слободна седишта" су обележена зеленом бојом а "резервисана седишта" црвеном бојом.<br> Кликом миша на "слободно седиште", у поље форме "Број седишта" аутоматски се уноси податак о седишту које желимо да резервишемо.<br> Када се форма попуни осталим подацима и пошаље, "слободно седиште" мења боју у црвену то јест постаје "резервисано".   
+     </p>   
+ </section> 
+   <nav>      
+  <a href="index.html">Почетна</a><br>     
+   <a href="autor.html">О аутору</a><br>   
+ </nav>
+ </body> 
+</html> 
+
+stilovi.css 
+
+.sediste
+{ 
+background-color:green;
+ width:30px; 
+height:30px; 
+text-align:center; 
+}

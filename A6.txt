@@ -1,0 +1,89 @@
+﻿Imenik.aspx.cs
+using System; 
+using System.Collections.Generic;
+using System.IO;
+using System.Web.UI.WebControls; 
+namespace A6_izmenjena
+{    
+public partial class Imenik : System.Web.UI.Page
+{        
+protected void Page_Load(object sender, EventArgs e)
+{            
+if (!IsPostBack)
+{
+    StreamReader f = new StreamReader(Server.MapPath("imenik.txt"));   
+    List<Korisnik> sviKorisnici = Korisnik.procitaj(f);  
+foreach (Korisnik k in sviKorisnici)
+{                    
+if 
+(!ddlMesto.Items.Contains(new ListItem(k.mesto))) 
+ddlMesto.Items.Add(k.mesto);
+}}}        
+protected void btnTrazi_Click(object sender, EventArgs e)
+{            
+StreamReader f = new StreamReader(Server.MapPath("imenik.txt"));  
+          List<Korisnik> sviKorisnici = Korisnik.procitaj(f);  
+          List<Korisnik> izabraniKorisnici = new List<Korisnik>();  
+          foreach (Korisnik k in sviKorisnici) 
+{               
+if    
+((txtIme.Text=="" || k.ime.Contains(txtIme.Text))  &&
+ (txtPrezime.Text == "" || k.prezime.Contains(txtPrezime.Text)) && 
+(txtAdresa.Text == "" ||k.adresa.Contains(txtAdresa.Text)) &&
+ (ddlMesto.SelectedValue == "сва места" || (k.mesto == ddlMesto.SelectedValue))  && 
+(txtBrojTelefona.Text == "" || k.broj.Contains(txtBrojTelefona.Text)))               
+ {
+ izabraniKorisnici.Add(k);       
+ }}   
+  gvIzabrani.DataSource = izabraniKorisnici;
+    gvIzabrani.DataBind();}}}
+
+Korisnik.cs 
+using System; 
+using System.Collections.Generic; 
+using System.IO; 
+namespace A6_izmenjena{    
+public class Korisnik{        
+public int sifra { get; set; }       
+ public string ime { get; set; }        
+public string prezime { get; set; }        
+public string adresa { get; set; }        
+public string mesto { get; set; }        
+public string broj { get; set; }        
+public string mail { get; set; }        
+public Korisnik(int sifra, string ime, string prezime, string adresa, string mesto, string broj, string mail)
+{  
+    this.sifra = sifra;  
+    this.ime = ime;            
+    this.prezime = prezime;            
+    this.adresa = adresa;            
+    this.mesto = mesto;            
+    this.broj = broj;            
+    this.mail = mail; 
+}        
+public static List<Korisnik> procitaj(StreamReader f)
+{         
+   List<Korisnik> sviKorisnici = new List<Korisnik>();            
+while (!f.EndOfStream)
+{                
+string[] sviPodaci = f.ReadLine().Split('|');  
+ Korisnik k = new Korisnik(Convert.ToInt32(sviPodaci[0]), sviPodaci[1],sviPodaci[2], sviPodaci[3], sviPodaci[4], sviPodaci[5], sviPodaci[6]);  
+              sviKorisnici.Add(k);           
+ }            
+return sviKorisnici;  
+}}} 
+
+imenik.txt 
+
+1|Pera|Perić|Nade Dimić 4|Zemun|0641234567|pera@yahoo.com 
+2|Milan|Mikić|Cara Dušana 12|Zemun|063125478|milanmikic@gmail.com 
+3|Laza|Lazić|Kneza Miloša 1|Beograd|0621234788|lazic78@yahoo.com 
+4|Janko|Janković|Vojvode Stepe 123|Niš|0635689741|jankojanko3@gmail.com 
+5|Milena|Lazarević|Karađorđeva 5|Beograd|0645896321|milazarevic@yahoo.com 
+6|Milica|Petrović|Vojvođanska 10|Novi Sad|063258744|milicaper3@yahoo.com 
+7|Lazar|Janić|Knez Mihailova 78|Subotica|0647894562|lazarjanic@gmail.com 
+8|Lazar|Savić|Knez Mihailova 2|Novi Sad|0612356897|lazarsavic32@gmail.com 
+9|Petar|Petrović|Nade Dimić 15|Niš|060125678|petarpetar@gmail.com 
+10|Marko|Marković|Nemanjina 20|Šabac|0656412345|mmarkovic@gmail.com 
+11|Marko|Marković|Nemanjina 20|Loznica|0656412345|mmarkovic@gmail.com
+ 

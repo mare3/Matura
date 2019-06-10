@@ -1,0 +1,97 @@
+﻿index.html 
+<!DOCTYPE html> 
+<html> 
+<head>   
+ <title>Фото галерија</title> 
+   <meta http-equiv="content-type" content="text/html; charset=UTF-8" >   
+ <link rel="stylesheet" type="text/css" href="css/stilovi.css">   
+ <script type="text/javascript" src="js/funkcionalnost.js"></script>
+ </head> 
+<body> 
+   <header> 
+       <h1>Почетна страница</h1>  
+  </header>  
+  <div id="kontejner"><br/>       
+ <h2 id="naziv"></h2>
+        
+<img src="slike/logo.jpg" id="centralna"/>        <br/>       
+ <img src="slike/slika1.jpg" class="male" onclick="promeni(1)"/>       
+ <img src="slike/slika2.jpg" class="male" onclick="promeni(2)"/>       
+ <img src="slike/slika3.jpg" class="male" onclick="promeni(3)"/>       
+ <img src="slike/slika4.jpg" class="male" onclick="promeni(4)"/>       
+ <img src="slike/slika5.jpg" class="male" onclick="promeni(5)"/>       
+ <img src="slike/slika6.jpg" class="male" onclick="promeni(6)"/>       
+ <img src="slike/slika7.jpg" class="male" onclick="promeni(7)"/>       
+ <img src="slike/slika8.jpg" class="male" onclick="promeni(8)"/>       
+ <img src="slike/slika9.jpg" class="male" onclick="promeni(9)"/>        
+<img src="slike/slika10.jpg" class="male" onclick="promeni(10)"/>    
+</div>   
+ <nav>      
+  <a href="autor.html">О аутору</a><br/>      
+  <a href="uputstvo.html">Упутство</a><br>   
+ </nav>
+ </body>
+ </html> 
+
+funkcionalnost.js
+
+ function promeni(br)
+{ document.getElementById("centralna").src="slike/slika"+br+".jpg"; document.getElementById("naziv").innerHTML="slika"+br+".jpg"; }
+
+ stilovi.css
+
+ #kontejner{ width:640px; height:480px; margin-left:auto; margin-right:auto; background-color:gray; }
+ #centralna{ width:320px; height:200px; margin-left:160px; margin-right:160px; } 
+.male{ width:64px; height:40px; margin-left:-2px; margin-right:-2px; margin-top:30px; }
+ h1,h2{ text-align:center; color:blue; }
+body{background-color:yellow;} 
+a{font-size:150%;}
+
+autor.html 
+
+<!DOCTYPE html>
+ <html> 
+<head>   
+ <title>Аутор</title> 
+   <meta http-equiv="content-type" content="text/html; charset=UTF-8" >   
+ <link rel="stylesheet" type="text/css" href="css/stilovi.css"> 
+</head> 
+<body>  
+  <header>  
+ <h1>О аутору</h1><br>   
+ </header>   
+ <section>       
+ <p class="uputstvo"> Назив веб апликације: "Фото галерија" <br> Аутор: Пера Петровић<br> Школа: Електротехничка школа "Земун"<br> Е-маил: perapetrovic@gmail.com <br> Датум: 27.јун 2016. године    
+    </p>   
+ </section> 
+   <nav>      
+  <a href="index.html">Почетна</a><br>      
+  <a href="uputstvo.html">Упутство</a><br>  
+  </nav> 
+</body>
+ </html>
+
+uputstvo.html
+
+ <!DOCTYPE html> 
+<html> 
+<head>    
+<title>Упутство</title> 
+   <meta http-equiv="content-type" content="text/html; charset=UTF-8" >   
+ <link rel="stylesheet" type="text/css" href="css/stilovi.css">
+ </head> 
+<body>   
+ <header>   
+     <h1>Упутство за коришћење веб апликације Фото галерија</h1><br>  
+  </header>  
+  <section>     
+   <p class="uputstvo">  
+ Функционалност апликације "Фото галерија" је да се левим кликом миша на доњу (малу) фотографију та фотографија прикаже на месту централне фотографије, а такође се исписује њен назив изнад централне фотографије.      
+  </p>    
+</section>  
+  <nav>     
+   <a href="index.html">Почетна</a><br>      
+  <a href="autor.html">О аутору</a><br>   
+ </nav> 
+</body> 
+</html>

@@ -1,0 +1,168 @@
+﻿index.html
+<!DOCTYPE HTML> 
+<html>  
+<head>    
+<title>CSS3_sandy</title>    
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />   
+ <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,600| Source+Code+Pro" rel="stylesheet" />   
+ <!--[if lte IE 8]><script src="html5shiv.js" type="text/javascript"></script><!
+[endif]-->    
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>   
+ <script src="js/skel.min.js">     
+ {        
+prefix: 'css/style',       
+ preloadStyleSheets: true,       
+ resetCSS: true,        
+boxModel: 'border',        
+grid: { gutters: 30 },       
+ breakpoints: {          
+wide: { range: '1200-', containers: 1140, grid: { gutters: 50 } },      
+    narrow: { range: '481-1199', containers: 960 },        
+  mobile: { range: '-480', containers: 'fluid', lockViewport: true, 
+grid: { collapse: true } } } }   
+ </script>    <script src="js/kod.js" type="text/javascript"></script> 
+ </head> 
+ <body>  
+  <div id="header_container">     
+ <div class="container"><!-- Header -->   
+     <div id="header" class="row">         
+ <div class="4u">        
+    <div class="transparent">       
+       <h1><a href="index.html">Нумеролошко Слагање</a></h1>       
+     </div>      
+    </div>      
+  </div>      
+  <div class="row">    
+      <div id="menubar"  class="12u">    
+        <nav id="main-nav" class="12u">     
+         <ul>        
+        <li><a class="active" href="index.html">Почетна</a></li>       
+         <li><a href="autor.html">О аутору</a></li>               
+ <li><a href="uputstvo.html">Упутство</a></li>             
+ </ul>          
+  </nav>         
+ </div>        
+</div>      
+</div>   
+ </div>  
+  <div id="site_content">      
+<div class="container"><!-- Features -->       
+ <div class="row">          
+<section class="12u">           
+ <div class="main_content">              
+<form> 
+Име особе 1:<input type="text" id="ime1"/>
+Име особе 2:<input type="text" id="ime2"/></br> 
+Датум рођења особе 1:<input type="text" id="datum1"/>
+Датум рођења особе 2:<input type="text" id="datum2"/></br>                
+<input type="button" onclick="izracunaj()" value="Израчунај"/>                
+</br><img src="images/flowers.jpg" id="slika"/>                
+<p id="osoba1"></p><p id="osoba2"></p><p id="broj"></p>              
+</form>           
+ </div>        
+ </section>      
+  </div>      
+</div>   
+ </div>   
+ <div id="footer_container">     
+ <div class="container"><!-- Footer -->        
+<footer>       
+ </footer>    
+  </div>   
+ </div>  
+</body> 
+</html>
+
+kod.js 
+
+function izracunaj(){ 
+document.getElementById("osoba1").innerHTML = document.getElementById("ime1").value; 
+document.getElementById("osoba2").innerHTML = document.getElementById("ime2").value; 
+var sl = document.getElementById("broj"); 
+var datum1 = document.getElementById("datum1").value; 
+var datum2 = document.getElementById("datum2").value; 
+while((datum1 += "").length > 1)
+{ 
+var broj = 0; for(var i = 0;i < datum1.length;i++){ if(!isNaN(datum1[i])){broj += parseInt(datum1[i]);} } datum1 = broj; } 
+while((datum2 += "").length > 1)
+{ 
+var broj = 0; for(var i = 0;i < datum2.length;i++){ if(!isNaN(datum2[i])){broj += parseInt(datum2[i]);} } datum2 = broj; } 
+datum1 = parseInt(datum1); 
+datum2 = parseInt(datum2); 
+if(datum1 > datum2) sl.innerHTML = parseInt((datum2/datum1*100)) + "%"; 
+else sl.innerHTML = parseInt((datum1/datum2*100)) + "%"; } 
+
+autor.html 
+
+<div id="header_container">      
+<div class="container"><!-- Header -->        
+<div id="header" class="row">         
+ <div class="4u">            
+<div class="transparent">             
+ <h1><a>О аутору</a></h1>           
+ </div>        
+  </div>       
+ </div>        
+<div class="row">          
+<div id="menubar"  class="12u">        
+    <nav id="main-nav" class="12u">  
+            <ul>               
+ <li><a href="index.html">Почетна</a></li>              
+  <li><a class="active" href="autor.html">О аутору</a></li>                
+<li><a href="uputstvo.html">Упутство</a></li>            
+  </ul>           
+ </nav>        
+  </div>      
+  </div>     
+ </div>   
+ </div>    
+<div id="site_content">    
+ <div class="container"><!-- Features -->        
+<div class="row">          
+<div class="main_content"><br/>            
+<p>Аутор: Пера Перић</p>           
+ <p>e-mail: а@b.c</p>         
+ </div>     
+ </div>    
+</div>
+
+uputstvo.html   
+
+ <div id="header_container">      
+<div class="container"><!-- Header -->        
+<div id="header" class="row">         
+ <div class="4u">           
+ <div class="transparent">             
+ <h1><a>О аутору</a></h1>         
+   </div>       
+   </div>       
+ </div>        
+<div class="row">        
+  <div id="menubar"  class="12u">          
+  <nav id="main-nav" class="12u">             
+ <ul>               
+ <li><a href="index.html">Почетна</a></li>               
+ <li><a href="autor.html">О аутору</a></li>               
+ <li><a class="active" href="uputstvo.html">Упутство</a></li>            
+  </ul>           
+ </nav>          
+</div>       
+ </div>      
+</div>    
+</div>    
+<div id="site_content">      
+<div class="container"><!-- Features -->        
+<div class="row">         
+<div class="main_content"><br/>     
+  <p>У одговарајућа поља унети одговарајуће податке и кликнути на дугме.</p>         
+   <p>На слици ће вам се приказати колико се слажете са другом особом.</p>      
+    </div>     
+ </div>  
+  </div> 
+
+style.css
+
+#slika{  width:400px; } 
+#osoba1{ position:fixed; left:40vw; top:40em; } 
+#osoba2{ position:fixed; right:40vw; top:40em; } 
+#broj{ position:fixed; right:49vw; top:40em; }

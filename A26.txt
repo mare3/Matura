@@ -1,0 +1,130 @@
+﻿dizajn.css 
+
+body{background-color  :yellow;   color  :red;     } 
+table{ width:640px; border:1px solid black; background-color:white; margin:auto; border-collapse:collapse;}
+td{ text-align:center; border:1px solid black; } 
+img{ width:100px; height:80px; } 
+h1{ text-align:center; color:red; } 
+nav{ line-height:30px; height:250px; width:250px; float:left; padding:5px; } 
+section{width:800px; height:100px; float:left; text-align:center; padding:15px;} 
+a{ text-decoration:none; } 
+
+funkcionalnost.js 
+
+function prikazi(i) {  
+switch(i) {    
+case 1: prozor = window.open('http://sr.wikipedia.org/wiki/Фрула'); break;    
+case 2: prozor = window.open('http://sr.wikipedia.org/wiki/Клавир'); break;    
+case 3: prozor = window.open('http://sr.wikipedia.org/wiki/Гитара'); break;    
+case 4: prozor = window.open('http://sr.wikipedia.org/wiki/Саксофон'); break;    
+case 5: prozor = window.open('http://sr.wikipedia.org/wiki/Бубањ'); break;    
+case 6: prozor = window.open('http://sr.wikipedia.org/wiki/Труба'); break; 
+ } } 
+
+function zaustavizvuk() { 
+var zvuk1 = document.getElementById("zvuk");    
+zvuk1.pause(); } 
+
+function pustizvuk(traka) 
+{ var zvuk1 = document.getElementById("zvuk");    zvuk1.src=traka;    zvuk1.play(); }
+
+index.html 
+
+<html> 
+<head>  
+<title> Почетна</title>  
+<link rel="stylesheet" type="text/css" href="css/dizajn.css">  
+<meta charset="UTF-8" >  
+<script type="text/javascript" src="js/funkcionalnost.js"></script>
+ </head>
+ <body> 
+ <audio loop id="zvuk" src="" ></audio> 
+ <nav>   
+ <ul>     
+ <li><a href="autor.html">О аутору</a></li>     
+ <li><a href="uputstvo.html">Упутство</a></li>   
+ </ul> 
+ </nav>
+  <section>  
+  <header><h1>Звуци инструмената</h1></header>  
+  <table>     
+ <tr>     
+   <th> Назив инструмента</th>      
+  <th> Слика инструмента</th>     
+   <th> Звук инструмента</th>     
+ </tr>   
+   <tr>      
+  <td>Фрула</td>       
+ <td><img src="slike/frula.jpg" onclick="prikazi(1)"/></td>       
+ <td><img src="slike/zvucnik.jpg" onmouseover="pustizvuk('zvuci/frula.mp3')" onmouseout="zaustavizvuk()"/></td>     
+ </tr>      
+<tr>       
+ <td>Клавир</td>        
+<td><img src="slike/klavir.jpg" onclick="prikazi(2)"/></td>     
+   <td><img class="instrumenti" src="slike/zvucnik.jpg" onmouseover="pustizvuk('zvuci/klavir.mp3')" onmouseout="zaustavizvuk()"/></td>     
+ </tr>      
+<tr>       
+ <td>Гитара</td>      
+  <td><img src="slike/gitara.jpg" onclick="prikazi(3)"/></td>        
+<td><img src="slike/zvucnik.jpg" onmouseover="pustizvuk('zvuci/gitara.mp3')" onmouseout="zaustavizvuk()"/></td>     
+ </tr>     
+ <tr>        
+<td>Саксофон</td>        
+<td><img src="slike/saksofon.jpg" onclick="prikazi(4)"/></td>        
+<td><img src="slike/zvucnik.jpg" onmouseover="pustizvuk('zvuci/saksofon.mp3')" onmouseout="zaustavizvuk()"/></td>      
+</tr>     
+ <tr>      
+  <td>Бубањ</td>       
+ <td><img src="slike/bubanj.jpg" onclick="prikazi(5)"/></td>      
+ <td><img src="slike/zvucnik.jpg" onmouseover="pustizvuk('zvuci/bubnjevi.mp3')" onmouseout="zaustavizvuk()"/></td>     
+ </tr>     
+ <tr>       
+ <td>Труба</td>       
+ <td><img src="slike/truba.jpg" onclick="prikazi(6)"/></td>        
+<td><img src="slike/zvucnik.jpg" onmouseover="pustizvuk('zvuci/truba.mp3')" onmouseout="zaustavizvuk()"/></td>     
+ </tr>    
+</table>  
+</section> 
+</body> 
+</html>
+
+uputstvo.html 
+<html> 
+<head>  
+<link rel="stylesheet" type="text/css" href="css/dizajn.css">   
+<meta charset="UTF-8" >  
+<title> Упутство </title> 
+</head>
+ <body>  
+<h1>Упутство</h1> 
+ <nav>    
+<ul>  
+<li><a href="index.html">Почетна</a></li>  
+<li><a href="autor.html">О аутору</a></li> 
+</ul>  
+</nav>  
+<p>Упутство за коришћење веб апликације: <br/>   
+ Левим кликом миша на слику инструмента отвара се нова страница која нас води на сајт http://sr.wikipedia.org/ где се налази опис тог инструмента. <br/>    Преласком миша преко слике звучника чује се карактеристичан звук тог инструмента. 
+ </p>
+ </body> 
+</html> 
+
+autor.html
+
+ <html> 
+<head>  
+<link rel="stylesheet" type="text/css" href="css/dizajn.css">  
+<meta charset="UTF-8" > 
+ <title>О аутору</title> 
+</head> 
+<body> 
+ <h1>О аутору</h1>  
+<nav>    
+<ul>  
+<li><a href="index.html">Почетна</a></li>  
+<li><a href="uputstvo.html">Упутство</a></li> 
+</ul>  
+</nav>  <p>Име и презиме: Петар Петровић<br>     е-маил: pera5@gmail.com<br>    Школа:ЕТШ"Земун" <br>    Назив апликације: Звуци инструмената <br>    Датум: 14.12.2016.<br> 
+</p> 
+</body> 
+</html>

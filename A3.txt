@@ -1,0 +1,106 @@
+﻿index.html
+
+ <html>
+ <head> 
+   <title>Временска прогноза</title>   
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8" >   
+ <link rel="stylesheet" type="text/css" href="css/stilovi.css" /> 
+   <script type="text/javascript" src="js/funkcionalnost.js"></script>
+ </head> 
+<body>   
+ <header> 
+ <h1>Временска прогноза</h1>  
+ <header> 
+<form> Изабери град: <select id="grad" onchange="prikazi()"> 
+<option value="1">Београд</option> 
+<option value="2">Нови сад</option> 
+<option value="3">Суботица</option>
+ <option value="4">Шабац</option> 
+<option value="5">Крагујевац</option>
+ <option value="6">Ниш</option> 
+<option value="7">Краљево</option> 
+<option value="8">Лесковац</option> 
+<option value="9">Чачак</option> 
+<option value="10">Ваљево</option> 
+</select> 
+</form> 
+<iframe id="link" src="https://naslovi.net/vremenska-prognoza/beograd"></iframe>
+ <br/><br/>
+ <nav>        
+<a href="autor.html">О аутору</a><br/>   
+    <a href="uputstvo.html">Упутство</a><br>    
+</nav> 
+</body>
+ </html> 
+
+funkcionalnost.js
+
+ function prikazi()
+{ var izbor=document.getElementById("grad").value;
+ var a=document.getElementById("link");
+switch(izbor){ 
+case "1": a.src="https://naslovi.net/vremenska-prognoza/beograd";break; 
+case "2": a.src="https://naslovi.net/vremenska-prognoza/novi-sad";break; 
+case "3": a.src="https://naslovi.net/vremenska-prognoza/subotica";break;
+ case "4": a.src="https://naslovi.net/vremenska-prognoza/sabac";break; 
+case "5": a.src="https://naslovi.net/vremenska-prognoza/kragujevac";break; 
+case "6": a.src="https://naslovi.net/vremenska-prognoza/nis";break; 
+case "7": a.src="https://naslovi.net/vremenska-prognoza/kraljevo";break;
+ case "8": a.src="https://naslovi.net/vremenska-prognoza/leskovac";break;
+ case "9": a.src="https://naslovi.net/vremenska-prognoza/cacak";break; 
+case "10":a.src="https://naslovi.net/vremenska-prognoza/valjevo";break; 
+} } 
+
+stilovi.css 
+
+body{background-color:yellow;} 
+h1{ text-align:center; color:blue; } 
+iframe{ width:640px; height:680px; }
+
+autor.html 
+
+<!DOCTYPE html> 
+<html>
+ <head>  
+ <title>Аутор</title>  
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8" >   
+ <link rel="stylesheet" type="text/css" href="css/stilovi.css"> 
+</head> 
+<body>  
+  <header>    
+  <h1>О аутору</h1><br>   
+ </header> 
+   <section>      
+  <p class="uputstvo"> Назив веб апликације: "Временска прогноза" <br> Аутор: Пера Петровић<br> Школа: Електротехничка школа "Земун"<br> Е-маил: perapetrovic@gmail.com <br> Датум: 27.јун 2016. године       
+ </p>   
+ </section> 
+   <nav>     
+   <a href="index.html">Почетна</a><br>     
+   <a href="uputstvo.html">Упутство</a><br>   
+ </nav> 
+</body>
+ </html>
+
+ uputstvo.html
+
+ <!DOCTYPE html>
+ <html> 
+<head>  
+  <title>Упутство</title>    
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" >   
+ <link rel="stylesheet" type="text/css" href="css/stilovi.css">
+ </head>
+ <body>   
+ <header>   
+  <h1>Упутство за коришћење веб апликације "Временска прогноза"</h1><br>   
+ </header>   
+ <section>       
+ <p class="uputstvo">   Функционалност апликације "Временска прогноза":<br> При стартовању апликације, "слободна седишта" су обележена зеленом бојом а "резервисана седишта" црвеном бојом.<br> Кликом миша на "слободно седиште", у поље форме "Број седишта" аутоматски се уноси податак о седишту које желимо да резервишемо.<br> Када се форма попуни осталим подацима и пошаље, "слободно седиште" мења боју у црвену то јест постаје "резервисано".     
+   </p>   
+ </section>  
+  <nav>       
+ <a href="index.html">Почетна</a><br>    
+    <a href="autor.html">О аутору</a><br>  
+  </nav>
+ </body> 
+</html>

@@ -1,0 +1,150 @@
+﻿index.html 
+<!DOCTYPE html> 
+<html> 
+<head>  
+<title>Ефекти табеле</title> 
+<meta charset="UTF-8">  
+<link rel="stylesheet" type="text/css" href="css/stilovi.css">  
+<script type="text/javascript" src="js/funkcionalnost.js"></script> 
+</head> 
+<body>  
+<header>   
+ <h1>Ефекти табеле</h1>  </header>  
+<table id="Tabela">    
+<tr>      
+<th>Rbr</th>      
+<th>Ime</th>      
+<th>Prezime</th>      
+<th>Škola</th>      
+<th>Poeni</th>
+    </tr>    
+<tr>      
+<td>1.</td>      
+<td>Pera</td>      
+<td>Mikić</td>      
+<td>OŠ "Vuk Karadžić"</td>      
+<td>54</td>    
+</tr>    
+<tr>     
+ <td>2.</td>      
+<td>Mika</td>      
+<td>Zikić</td>     
+ <td>OŠ "Ivo Andrić"</td>     
+ <td>42</td>    
+</tr>    
+<tr>     
+ <td>3.</td>      
+<td>Marko</td>     
+ <td>Marković</td>      
+<td>OŠ "Petar Petrović"</td>      
+<td>60</td>    
+</tr>    
+<tr>      
+<td>4.</td>      
+<td>Ana</td>      
+<td>Antić</td>     
+ <td>OŠ "Laza Kostić"</td>     
+ <td>35</td>    
+</tr>    
+<tr>      
+<td>5.</td> 
+  <td>Milica</td>      
+<td>Antić</td>      
+<td>OŠ "Laza Kostić"</td>      
+<td>20</td>    
+</tr>    
+<tr>      
+<td>6.</td>      
+<td>Pera</td>      
+<td>Perić</td>     
+ <td>OŠ "Petar Petrovic"</td>      
+<td>75</td>    
+</tr>    
+<tr>      
+<td>7.</td>      
+<td>Miloš</td>     
+ <td>Mišić</td>      
+<td>OŠ "Kralj Aleksandar"</td>      
+<td>55</td>    
+</tr>  
+</table><br>  
+<div>    
+<input type="button" value="Сортирај" onclick="Sortiraj()"/>  &nbsp;    
+<input type="button" value="Обоји алтернативне редове" onclick="obojiNeparne();"/> <br/>    
+<input type="button"  value="Маркирај оне који су положили" onclick="obradi('polozili');" /> <br/>    
+<input type="button"  value="Маркирај оне који нису положили"  onclick="obradi('nisuPolozili')"/> <br/>    
+<input type="button"  value="Издвоји оне који су положили" onclick="izdvoji()"/>   </div>
+  <nav>    
+<br/>
+<a href="oAplikaciji.html">О апликацији</a> 
+ </nav>
+ </body>
+</html> 
+
+stilovi.css 
+
+h1{color:blue;} 
+th{background-color:yellow;} 
+table,th,td{border:1px solid black;} 
+table{border-collapse:collapse;} 
+funkcionalnost.js 
+
+var brKolona=5;
+var obAltRed=false;
+
+function Sortiraj(){  
+var tabela=document.getElementById("Tabela");  
+var redovi=tabela.rows;  
+var brRedova=tabela.rows.length;  
+for(var i=1;i<brRedova-1;i++){   
+ for(var j = i+1;j<brRedova;j++){     
+ var poeni_i=parseInt(redovi[i].cells[4].innerHTML);     
+ var poeni_j=parseInt(redovi[j].cells[4].innerHTML);     
+ if(poeni_i<poeni_j){        var pom = redovi[i].innerHTML;        
+redovi[i].innerHTML=redovi[j].innerHTML;        
+redovi[j].innerHTML=pom;      }    }  } } 
+
+function obojiNeparne()
+{obAltRed=true;  obradi("obojiNeparne"); } 
+function izdvoji(){obradi("izdvoji");  
+Sortiraj();  
+if(obAltRed)obradi("obojiNeparne");
+} function obradi(tip_obrade)
+{
+var tabela=document.getElementById("Tabela");  
+var brRedova=tabela.rows.length;  for(var i=1;i<brRedova;i++){  
+  switch (tip_obrade){    
+case "obojiNeparne":tabela.rows[i].style.backgroundColor=((i%2==1)?"LightGray":"White");break;    
+case "polozili":if(parseInt(tabela.rows[i].cells[4].innerHTML)>50) obojiCelije(tabela.rows[i],"green");break;    
+case "nisuPolozili":if(parseInt(tabela.rows[i].cells[4].innerHTML)<=50) obojiCelije(tabela.rows[i],"red");break;    
+case "izdvoji":if(parseInt(tabela.rows[i].cells[4].innerHTML)<=50){tabela.deleteRow(i); brRedova--; i--; };break; 
+}  } } 
+
+function obojiCelije(red,boja)
+{
+for(var i=0;i<brKolona;i++)
+{red.cells[i].style.color=boja;} }
+
+oAplikaciji.html
+
+ <!DOCTYPE html> 
+<html> 
+<head>   
+<title>О апликацији</title>  
+<meta charset="UTF-8">  
+<link rel="stylesheet" href="css/stilovi.css"/> 
+</head> 
+<body> 
+ <header>   
+ <h1>О апликацији:</h1> 
+ </header>  
+<section>   
+ <p>Аутор: Пера Перић;  e-mail: а@b.c<br/>       Aпликација: Сортирање табеле<br/>  Датум креирања: 01.06.2019.   
+ </p>  
+<section>  
+<br/>  
+<nav>    
+<a href="index.html"> Ефекти табеле </a>  
+</nav> 
+</body> 
+</html>

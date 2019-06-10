@@ -1,0 +1,96 @@
+﻿index.html
+
+<!DOCTYPE html> 
+<html> 
+<head>  
+<title>СЛАЈДЕР ЗА СЛИКЕ</title>  
+<meta charset="UTF-8"/>  
+<link rel="stylesheet" type="text/css" href="css/stilovi.css"/>  
+<script type="text/javascript" src="js/kod.js"></script> 
+</head> 
+<body onload="inicijalizacija()">  
+<header>    
+<h1 class="cent">СЛАЈДЕР ЗА СЛИКЕ</h1>  
+</header>  
+<div id="slike">   
+ <img src="slike/001.jpg"></img>    
+<img src="slike/002.jpg"></img>   
+ <img src="slike/003.jpg"></img>    
+<img src="slike/004.jpg"></img>    
+<img src="slike/005.jpg"></img>    
+<br/><br/>    
+<input type="button" id="k1"/>    
+<input type="button" id="k2"/>    
+<input type="button" id="k3"/>    
+<input type="button" id="k4"/>    
+<input type="button" id="k5"/>  
+</div>  
+<nav class="cent">    
+<br/><a href="oAplikaciji.html">O апликацији</a> 
+ </nav> 
+</body> 
+</html>
+
+kod.js
+
+var  t0, t1, rbrsl, opac; 
+var slike=document.getElementsByTagName("img"); 
+function inicijalizacija()
+{
+rbrsl=1;
+slike[rbrsl-1].style.display="inline";/
+for(var i=1;i<slike.length;i++) 
+slike[i].style.display="none";
+ document.getElementById("k1").style.backgroundColor="lightGray";
+t0=setInterval('promeniSliku()',3000);
+} 
+
+function promeniSliku()
+{
+slike[rbrsl-1].style.display="none";
+document.getElementById("k"+rbrsl).style.backgroundColor="Gray";
+ rbrsl%=5;
+rbrsl+=1;
+slike[rbrsl-1].style.opacity="0.0";
+slike[rbrsl-1].style.display="inline";
+document.getElementById("k"+rbrsl).style.backgroundColor="lightGray";
+opac=0.0; 
+t1=setInterval('FadeIn()',10);
+} 
+function FadeIn(){
+if (opac<1.0){
+opac+=0.01; 
+slike[rbrsl-1].style.opacity=opac;}
+else(clearInterval(t1));
+} 
+
+stilovi.css 
+
+body{width:1000px; margin: 0 auto; background-color:lavender; } 
+img{ width:920px; height:400px; } 
+#slike input{ width:20px; height:20px; background-color:gray; } 
+#slike{ width:920px; background-color:darkGray; padding:20px; } 
+h1{ color:blue; } 
+.cent{text-align:center;}
+
+
+oAplikaciji.html
+
+ <!DOCTYPE html> 
+<html> 
+<head>  
+<title>О апликацији</title>  
+<meta charset="UTF-8"/>  
+<link rel="stylesheet" type="text/css" href="css/stilovi.css"/>   
+</head> 
+<body>  
+<header>    
+<h1>О апликацији:</h1>  
+</header>    
+<p>Аутор: Пера Перић;  e-mail: а@b.c<br/>       Aпликација: СЛАЈДЕР ЗА СЛИКЕ<br/>       Датум креирања: 01.06.2019.   
+ </p> 
+ <nav>    
+<br/><a href="index.html">СЛАЈДЕР ЗА СЛИКЕ</a>  
+</nav> 
+</body>
+ </html>

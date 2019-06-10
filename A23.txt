@@ -1,0 +1,108 @@
+﻿[BrojKartice] [nvarchar](10) NOT NULL, 
+[ImeValsnika] [nvarchar](50) NOT NULL, 
+[PrezimeVlasnika] [nvarchar](50) NOT NULL, 
+[AdresaVlasnika] [nvarchar](50) NOT NULL  ,
+[OstvareniBodovi] [float] NOT NULL ,
+[OstvareniPopust] [float] NOT NULL ,
+[RokVazenja] [float] NOT NULL,
+
+
+stilovi.css 
+body{background-color:azure;} 
+th{background-color:yellow;} 
+table{border:1pxsolidblack;} 
+h1{color:blue;}
+
+
+Kartica.cs
+namespace A23{    
+public class Kartica{        
+public string broj { get; set; }        
+public string ime { get; set; }        
+public string prezime { get; set; }        
+public string adresa { get; set; }        
+public double bodovi { get; set; }        
+public double popust { get; set; }        
+public double rokVazenja { get; set; }        
+public Kartica(string broj, string ime, string prezime, string adresa, double bodovi, double popust, double rokVazenja)
+{            
+this.broj = broj;            
+this.ime = ime;            
+this.prezime = prezime;            
+this.adresa = adresa;            
+this.bodovi = bodovi;            
+this.popust = popust;            
+this.rokVazenja = rokVazenja;       
+ }  } } 
+
+
+RAD SA VALIDATORIMA
+
+
+pocetna.aspx.cs
+
+using System; 
+using System.Collections.Generic; 
+using System.Data.SqlClient; 
+namespace A23{    
+public partial class pocetna : System.Web.UI.Page{        
+// SqlConnection con = new SqlConnection(@"Data Source=ETSZEMUN\SQLEXPRESS;Initial Catalog=baza23;Integrated Security=True");        
+SqlConnection con = new SqlConnection(@"Data Source=DESKTOP20VLH4G\SQLEXPRESS;Initial Catalog=baza23;Integrated Security=True");        
+protected void Page_Load(object sender, EventArgs e){}        
+protected void Button1_Click(object sender, EventArgs e)
+{            
+Label8.Text = "";            
+TextBox2.Text = "";
+TextBox3.Text = "";            
+TextBox4.Text = "";            
+TextBox5.Text = "";            
+TextBox6.Text = "";            
+TextBox7.Text = "";            
+if (TextBox1.Text == "") 
+{Label8.Text = "Морате унети број картице!";}            
+else{               
+List<Kartica> K = new List<Kartica>();
+ try{
+con.Open();
+SqlCommand cmd = new SqlCommand("select * from Kartice", con);   
+SqlDataReader RD = cmd.ExecuteReader();                    
+while (RD.Read()){                        
+Kartica Kart = new Kartica(RD[0].ToString(), RD[1].ToString(),   
+                          RD[2].ToString(), RD[3].ToString(), Convert.ToDouble(RD[4]),   
+                         Convert.ToDouble(RD[5]), Convert.ToDouble(RD[6]));              
+          K.Add(Kart); }             
+       RD.Close(); }
+catch (Exception x)
+{Label8.Text = x.Message;}             
+   finally{con.Close();}
+bool postojiUBazi = false;
+foreach (Kartica a in K){
+if (TextBox1.Text == a.broj){
+postojiUBazi = true;
+       TextBox2.Text = a.ime;
+       TextBox3.Text = a.prezime;                        
+TextBox4.Text = a.adresa;                        
+TextBox5.Text = a.bodovi.ToString();                       
+TextBox6.Text = a.popust.ToString();                       
+ int godina = Convert.ToInt32(a.rokVazenja);                       
+ int mesec = Convert.ToInt32(a.rokVazenja * 100) % 100;                      
+  TextBox7.Text=(mesec<10?"0":"")+mesec.ToString()+"/"+godina.ToString();                 
+                            mesec++;                       
+ if (mesec == 13){
+mesec = 1;
+godina++;                     
+DateTime datum_isteklo = new DateTime(godina, mesec, 1);                   
+int preostalo_dana = -DateTime.Now.Date.Subtract(datum_isteklo).Days;                        
+if (preostalo_dana <= 0) {Label8.Text = "Картица је НЕВАЖЕЋА!";}                      
+  else {Label8.Text = "Картица важи још "+preostalo_dana.ToString()+" дана.";}              
+      }                }                
+if (postojiUBazi == false)
+{Label8.Text = "Нема картице са тим бројем у бази података!";}      
+ } } } }
+
+
+
+ <asp:ScriptManager ID="ScriptManager1" runat="server">       
+ </asp:ScriptManager>        
+<asp:UpdatePanel ID="UpdatePanel1" runat="server">         
+   <ContentTemplate> 

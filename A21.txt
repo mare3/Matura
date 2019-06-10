@@ -1,0 +1,85 @@
+﻿stilovi.css
+h1 {color:blue;} 
+table,td,th,tr{ border:1px black solid; border-collapse:collapse; } 
+th{ background-color:LightGray;} 
+
+index.html 
+
+<!DOCTYPE html> 
+<html> 
+<head>   
+<title>Сортирање табеле</title>  
+<meta charset="UTF-8">  
+<link rel="stylesheet" href="css/stilovi.css"/> 
+ <script type="text/javascript" src="js/funkcionalnost.js"></script> 
+</head>
+ <body onload="inicijalizacija();">  
+<header><h1>Сортирање табеле</h1></header> 
+ <table id="MojaTabela">   
+ <tr>      
+<th onclick="sortirajTabelu(0)">
+<a href="#">Rbr</a></th>      
+<th onclick="sortirajTabelu(1)">
+<a href="#">Ime</a></th>      
+<th onclick="sortirajTabelu(2)">
+<a href="#">Prezime</a></th>
+    </tr>  
+  <tr>      
+<td>1.</td>      
+<td>Pera</td>     
+ <td>Mikic</td>   
+ </tr>    
+<tr>      
+<td>2.</td>     
+ <td>Mika</td>     
+ <td>Zikic</td>   
+ </tr>   
+ <tr>      
+<td>3.</td>      
+<td>Zika</td>      
+<td>Peric</td>    
+</tr>  
+</table>  
+<nav>
+<br/><a href="oAplikaciji.html">О апликацији</a>
+</nav>
+ </body>
+ </html> 
+
+funkcionalnost.js 
+
+var rastuce=[true,true,true];
+function inicijalizacija(){sortirajTabelu(0);}
+function sortirajTabelu(n){
+var numerickaCol=(n==0);  
+var tabela=document.getElementById("MojaTabela");   
+var redovi=tabela.rows;
+var brRedova=redovi.length;  
+for(var i=1;i<brRedova-1;i++){      
+for(var j=i+1;j<brRedova;j++){         
+var si=redovi[i].cells[n].innerHTML;           
+var sj=redovi[j].cells[n].innerHTML;           
+var opadaIJ=(numerickaCol?(parseInt(si)>parseInt(sj)):(si>sj));            
+if(opadaIJ==rastuce[n]){              
+ var pom=redovi[i].innerHTML;               
+redovi[i].innerHTML=redovi[j].innerHTML;                
+redovi[j].innerHTML=pom; } }}    
+rastuce[n]=!rastuce[n];} 
+
+oAplikaciji.html 
+
+<!DOCTYPE html> 
+<html> 
+<head>   
+<title>О апликацији</title>  
+<meta charset="UTF-8">  
+<link rel="stylesheet" href="css/stilovi.css"/> 
+</head> 
+<body>  
+<header><h1>О апликацији:</h1></header>  
+<p>Аутор: Пера Перић;  e-mail: а@b.c<br/>     Aпликација: Сортирање табеле<br/>     Датум креирања: 01.06.2019.</p> 
+ <nav><br/>
+<a href="index.html"> Ефекти табеле </a>
+</nav> 
+</body> 
+</html>

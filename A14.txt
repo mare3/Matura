@@ -1,0 +1,88 @@
+﻿stilovi.css 
+
+body{background-color:azure;} 
+th{background-color:yellow;} 
+table{border:1px solid black;} 
+h1{color:blue;} 
+
+Emisija.cs
+
+namespace program2{    
+public class Emisija{        
+public string vreme { get; set; }
+public string naziv { get; set; }
+public string tip { get; set; }        
+public string slika { get; set; }
+public Emisija() { }        
+public Emisija(string vreme,string naziv,string tip,string slika)
+{            
+this.vreme = vreme;            
+this.naziv = naziv;            
+this.tip = tip;            
+this.slika = slika;        
+}}}
+
+
+program.aspx.cs
+using System; 
+using System.Collections.Generic; 
+using System.Web.UI.WebControls; 
+using System.IO; 
+namespace program2{    
+public partial class program : System.Web.UI.Page {     
+   public void popuniListu()
+{
+DropDownList2.Items.Clear();
+string[] sveLinije = File.ReadAllLines(Server.MapPath("programskeSeme/" +DropDownList1.SelectedValue+".txt"));
+            foreach (string s in sveLinije) 
+{ 
+string[] podaci = s.Split('|');
+if (!DropDownList2.Items.Contains(new ListItem(podaci[2])))         
+           DropDownList2.Items.Add(podaci[2]); } }        
+
+protected void Page_Load(object sender, EventArgs e)
+{ 
+if (!IsPostBack) popuniListu(); 
+} 
+
+ protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e){          
+  popuniListu();  }  
+
+ protected void Button1_Click(object sender, EventArgs e){
+ List<Emisija> izabrane = new List<Emisija>();
+string[] sveLinije = File.ReadAllLines(Server.MapPath("programskeSeme/" +DropDownList1.SelectedValue + ".txt"));
+ foreach (string s in sveLinije){
+ string[] podaci = s.Split('|');
+                Emisija em = new Emisija(podaci[0], podaci[1], podaci[2], podaci[3]);               
+   if (em.tip == DropDownList2.SelectedValue) izabrane.Add(em);        
+    }           
+ GridView1.DataSource = izabrane;
+GridView1.DataBind();
+ }    } }
+
+ 28.03.2017  
+txt – текстуални фајл са подацима о дневној програмској шеми телевизијске станице (маркирани подаци се повезују са GridView1 табелом ради исписа података за време и назив емисије и приказа слике за тип емисије у трећој колони) 
+
+15:15|Tesna koza|Film|~/Slike/film.jpg 
+19:00|Slagalica|Kviz|~/Slike/kviz.jpg 
+19:30|Vesti|Informativni program|~/Slike/info.jpg 
+22:00|Tesna koza 2|Film|~/Slike/film.jpg
+
+
+kontakt.aspx – дизајн (табела је 7 х 3 поља, alignment:Center, 600px; прве две колоне су width:200px;)
+
+kontakt.aspx.cs 
+using System; 
+using System.Web.UI; 
+namespace program2{    
+public partial class kontakt : System.Web.UI.Page{     
+   protected void Page_Load(object sender, EventArgs e){ }   
+    
+protected void btnPosalji_Click(object sender, EventArgs e) {           
+ if (Page.IsValid) 
+{ lblPorukaCS.Text = "Порука је послата..."; }           
+ else { lblPorukaCS.Text = "Нешто није добро унесено..."; } } 
+} 
+}
+
+
