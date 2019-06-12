@@ -1,64 +1,154 @@
-﻿autor.html 
+index.html
 
-<!DOCTYPE html>
- <html> 
- <head> 
- <title>Аутор</title>  
- <meta http-equiv="content-type" content="text/html; charset=UTF-8" >   
- <link rel="stylesheet" type="text/css" href="css/stilovi.css">
- </head> 
- <body>  
- <header>  
- <h1>О аутору</h1><br> 
- </header>  
- <section>    
- <p class="uputstvo"> Назив веб апликације: "ДОМАЋЕ ЖИВОТИЊЕ" <br> Аутор: Пера Петровић<br> Школа: Електротехничка школа "Земун"<br> Е-маил: perapetrovic@gmail.com <br> Датум: 27.јун 2016. године        </p><br/>  
- </section>   
- <nav>       
- <a href="index.html" >Почетна</a><br>   
- <a href="uputstvo.html" >Упутство</a><br>  
- </nav> 
- </body> 
- </html> 
- 
- uputstvo.html 
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="stil.css"/>
+<script type="text/javascript" src="funk.js"></script>
+</head>
+<body id="index"> 
+<h1>Domace zivotinje</h1>
 
- <!DOCTYPE html> 
- <html> 
- <head>    
- <title>Упутство</title>  
- <meta http-equiv="content-type" content="text/html; charset=UTF-8" >   
- <link rel="stylesheet" type="text/css" href="css/stilovi.css"> </head> 
- <body>   
- <header>      
- <h1>Упутство за коришћење веб апликације "ДОМАЋЕ ЖИВОТИЊЕ"</h1><br>   
- </header>   
- <section>   
- <p class="uputstvo">   Функционалност апликације "ДОМАЋЕ ЖИВОТИЊЕ":<br> При стартовању апликације, на почетној страници налази се позадинска слика - природно станиште домаћих животиња, а на њој су постављене слике пет домаћих животиња.. За сваку од приказаних домаћих животиња постављен је њен назив и слика.<br> Кликом миша на назив домаће животиње отвара се прозор у коме се приказују основни подаци о животињи. <br>Преласком миша преко слике домаће животиње чује се карактеристичан звук те животиње.        </p><br/>   
- </section>   
- <nav>       
- <a href="index.html" >Почетна</a><br>   
- <a href="autor.html"  >О аутору</a><br>   
- </nav> 
- </body>
- </html>
+<a href="autor.html">O Autoru</a>
+<a href="upustvo.html">Upustvo</a>
 
-stilovi.css 
+<audio id="zvuk" src=""></audio>
 
-h1{ text-align:center; color:blue; } 
-*{ margin:0; padding:0; box-sizing:border-box; }
-#wrapper{ width:100%; min-width:100%; max-width:100%; min-height:100vh; max-height:100vh; overflow:hidden; position:relative; } 
-#pozadina{ width:100%; max-width:100%; min-width:100%; min-height:100vh; max-height:100vh; }
-#navigacija { display:block; position:absolute; left:2%; top:2%; font-size:250%; }
-#naslov{ position:absolute; left:2%; top:2%; min-width:100%; max-width:100%; font-size:150%; }
-#naslov h1{ color:purple;} 
-.zivotinja {position:absolute;} 
-.zivotinja img{ height:35vh; } 
-.zivotinja h3{ margin:0; font-size:200%; text-align:center; color:blue; } 
-#krava{ left:27%; top:15%; } 
-#krava img{ height:40vh; } 
-#koza{ left:2%; top:27%;}
-#svinja{ right:1%; top:33%; } 
-#pas{ right:35%; bottom:0%; } 
-#macka{ bottom:0%; left:25%; } 
-audio,source{display:none;}
+<div id="slike">
+<img src="slike/krava.jpg" id="krava" onclick="prikazi(1)" onmouseover="zvuk('zvukovi/krava.wav')" onmouseleave="zaustavi()"/>
+<img src="slike/ovca.jpg" id="ovca" onclick="prikazi(3)" onmouseover="zvuk('zvukovi/ovca.wav')" onmouseleave="zaustavi()"/>
+<img src="slike/pas.jpg" id="pas" onclick="prikazi(2)" onmouseover="zvuk('zvukovi/pas.wav')" onmouseleave="zaustavi()"/>
+<img src="slike/petao.jpg" id="petao" onclick="prikazi(4)" onmouseover="zvuk('zvukovi/petao.wav')" onmouseleave="zaustavi()"/>
+<img src="slike/svinja.jpg" id="svinja" onclick="prikazi(5)" onmouseover="zvuk('zvukovi/svinja.wav')" onmouseleave="zaustavi()"/>
+</div>
+
+</body>
+</html>
+
+autor.html
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="stil.css"/>
+
+</head>
+<body id="autor"> 
+<h1>O autoru</h1>
+<p>Autor ove stranice Marko Slepcevic</p>
+<a href="index.html">Pocetna stranica</a>
+<a href="upustvo.html">Upustvo</a>
+</body>
+</html>
+
+
+Uputstvo.HTML
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="stil.css"/>
+
+</head>
+<body id="upustvo"> 
+<h1>Upustvo</h1>
+<p>Aplikacija prelaskom misa preko slike zivotinje pusta njen zvuk a klikom otvara nov prozor sa opisom</p>
+<a href="autor.html">O Autoru</a>
+<a href="index.html">Pocetna stranica</a>
+</body>
+</html>
+
+
+stil.css
+
+#index{
+background-image: url('slike/farma.jpg');
+background-repeat: no-repeat;
+background-size:100% 100%;
+background-attachment:fixed;
+color:blue;
+}
+h1{
+	color:red;
+}
+
+#upustvo{
+	background-color:red;
+}
+
+#autor{
+	background-color:green;
+}
+
+img{
+	width:150px;
+	height:150px;
+}
+#slike{
+	position:relative;
+}
+
+#krava{
+	position:absolute;
+	top:500px;
+	right: 600px;
+}
+
+#pas{
+	position:absolute;
+	top:250px;
+	right: 300px;
+}
+
+#svinja{
+	position:absolute;
+	top:250px;
+	right: 800px;
+}
+
+#petao{
+	position:absolute;
+	top:250px;
+	left: 300px;
+}
+
+#ovca{
+	position:absolute;
+	top:650px;
+	left: 300px;
+}
+
+
+funkionalnost.js
+
+function prikazi(i){
+	switch(i){
+		case 1:
+			prozor1=window.open('','p1','width=800,height=800');
+			prozor1.document.write('<h1>Krava</h1> <p>Krava daje mleko</p>');
+			break;
+		case 2:
+			prozor2=window.open('','p1','width=800,height=800');
+			prozor2.document.write('<h1>Pas</h1> <p>Pas je covekov najbolji prijatelj</p>');
+			break;
+		case 3: 
+			prozor3=window.open('','p1','width=800,height=800');
+			prozor3.document.write('<h1>Ovca</h1> <p>Ovca ima lepo krzno</p>');
+			break;
+		case 4:
+			prozor4=window.open('','p1','width=800,height=800');
+			prozor4.document.write('<h1>Petao</h1> <p>Petao nas budi ujutru</p>');
+			break;
+		case 5:
+			prozor5=window.open('','p1','width=800,height=800');
+			prozor5.document.write('<h1>Svinja</h1> <p>Svinja je ukusna</p>');
+			break;
+	}
+}
+
+function zvuk(fajl){
+	document.getElementById("zvuk").src=fajl;
+	document.getElementById("zvuk").play();		
+}
+
+function zaustavi(){
+	document.getElementById("zvuk").pause();
+}
+
