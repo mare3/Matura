@@ -1,201 +1,205 @@
-﻿index.html 
+pocetna.html
 
-<!DOCTYPE html> 
-<html> 
-<head> 
-<title>Србија и њени суседи</title> 
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" >
- <link rel="stylesheet" href="css/stilovi.css" type="text/css"/> 
-<script type="text/javascript" src="js/jquery.js">
-</script> 
-<script src="js/funkcionalnost.js"></script> 
-</head> 
-<body> 
-<nav> 
-<a href="autor.html">О аутору</a>
- <a href="uputstvo.html">Упутство</a> 
-</nav> 
-<div id="wrapper">
- <img id="mapa" src="slike/mapa.png"/>
- <div id="srbija" class="drzava">
- <h3>Србија</h3> 
-<img src="slike/srbija.png" /> 
-<audio autoplay> 
-<source src="himne/SrpskaHimna.mp3" type="audio/mp3">
-</source> 
-</audio> 
-</div> 
-<div id="bosna" class="drzava">
- <h3>Босна и Херцеговина</h3>
- <img src="slike/bosna.png" />
- <audio autoplay> 
-<source src="himne/BosanskaHimna.mp3">
-</source> 
-</audio> 
-</div> 
-<div id="rumunija" class="drzava">
- <h3>Румунија</h3> 
-<img src="slike/rumunija.png" />
- <audio autoplay> 
-<source src="himne/RumunskaHimna.mp3"></source> 
-</audio> 
-</div> 
-<div id="bugarska" class="drzava"> 
-<h3>Бугарска</h3> 
-<img src="slike/bugarska.png" /> 
-<audio autoplay> 
-<source src="himne/BugarskaHimna.mp3"></source>
- </audio> 
-</div> 
-<div id="makedonija" class="drzava"> 
-<h3>Македонија</h3> 
-<img src="slike/makedonija.png" />
- <audio autoplay> 
-<source src="himne/MakedonskaHimna.mp3"></source>
- </audio> 
-</div> 
-<div id="albanija" class="drzava"> 
-<h3>Албанија</h3> 
-<img src="slike/albanija.png" />
- <audio autoplay> 
-<source src="himne/AlbanskaHimna.mp3"></source>
- </audio> 
-</div> 
-<div id="crnagora" class="drzava"> 
-<h3>Црна Гора</h3>
-<img src="slike/crna gora.png" /> 
-<audio autoplay>
- <source src="himne/CrnogorskaHimna.mp3"></source> 
-</audio>
- </div> 
-<div id="hrvatska" class="drzava">
- <h3>Хрватска</h3> 
-<img src="slike/hrvatska.png" /> 
-<audio autoplay> 
-<source src="himne/HrvatskaHimna.mp3"></source>
- </audio>
- </div> 
-<div id="madjarska" class="drzava"> 
-<h3>Мађарска</h3> 
-<img src="slike/madjarska.png" /> 
-<audio autoplay>
- <source src="himne/MadjarskaHimna.mp3"></source> 
-</audio> 
-</div> 
-</div> 
-</body> 
-</html> 
+<head>
+<body id="pocetna">
+<h1>Pocetna</h1>
+<audio id="himna"  src=""> </audio>
+<img  src="slike/srbija.png"  id="srb"  onmouseover="pustiHimnu('Srpska')" onmouseout="zaustaviHimnu()"/>
+<img  src="slike/bosna.png"  id="bos" onmouseover="pustiHimnu('Bosanska')" onmouseout="zaustaviHimnu()"/>
+<img  src="slike/bugarska.png"  id="bug"  onmouseover="pustiHimnu('Bugarska')" onmouseout="zaustaviHimnu()"/>
+<img  src="slike/makedonija.png"  id="mak"  onmouseover="pustiHimnu('Makedonska')" onmouseout="zaustaviHimnu()"/>
+<img  src="slike/madjarska.png"  id="madj"  onmouseover="pustiHimnu('Madjarska')" onmouseout="zaustaviHimnu()"/>
+<img src="slike/hrvatska.png"  id="hrv"  onmouseover="pustiHimnu('Hrvatska')" onmouseout="zaustaviHimnu()"/>
+<img  src="slike/rumunija.png"  id="rum"  onmouseover="pustiHimnu('Rumunska')" onmouseout="zaustaviHimnu()"/>
+<img  src="slike/albanija.png"  id="alb"  onmouseover="pustiHimnu('Albanska')" onmouseout="zaustaviHimnu()"/>
+<img src="slike/crna gora.png"  id="cg"  onmouseover="pustiHimnu('Crnogorska')" onmouseout="zaustaviHimnu()"/>
 
-funkcionalnost.js 
-
-var podaci = { Србија: { grad: "Београд", brStanovnika: "7.186.862", povrsina: "88,499 km²", himna: "himne/SrpskaHimna.mp3" },
- "Босна и Херцеговина": { grad: "Сарајево", brStanovnika: "3.531.159", povrsina: "51.209,2 km²", himna: "himne/BosanskaHimna.mp3" },
- Албанија: { grad: "Тирана", brStanovnika: " 2.821.977", povrsina: "28.748 km2", himna: "himne/AlbanskaHimna.mp3" }, 
-Хрватска: { grad: "Загреб", brStanovnika: "4.284.889", povrsina: "56.594 km²", himna: "himne/HrvatskaHimna.mp3" }, 
-Бугарска: { grad: "Софија", brStanovnika: "7.245.677", povrsina: "110.994 km²", himna: "himne/BugarskaHimna.mp3" }, 
-Румунија: { grad: "Букурешт", brStanovnika: "19.511.000", povrsina: "238.391 km²", himna: "himne/RumunskaHimna.mp3" }, 
-Македонија: { grad: "Скопље",brStanovnika: "2.103.721", povrsina: "25.713 km²", himna: "himne/MakedonskaHimna.mp3"}, 
-"Црна Гора": { grad: "Подгорица", brStanovnika: "620.029", povrsina: "13.812 km²", himna: "himne/CrnogorskaHimna.mp3" }, 
-Мађарска: { grad: "Будимпешта", brStanovnika: "9.879.000", povrsina: "93.027,44 km²", himna: "himne/MadjarskaHimna.mp3" }} 
-
-$(document).ready(function()
-{ 
-var niz = $('audio');
- for(var i = 0; i < niz.length; i++)
-{ 
-niz[i].pause();
- niz[i].currentTime = 0;
- } 
-$('.drzava h3').on('click',function()
-{ 
-var drzava = $(this).text();
- var d = podaci[drzava];
- var f = open(""); 
-var string = "<h1 style='color:green;'>Држава: " + drzava + "</h1>"; 
-string += "<p>Главни град: " + d.grad + "</p>"; 
-string += "<p>Број становника: " + d.brStanovnika + "</p>"; 
-string += "<p>Површина: " + d.povrsina + "</p>"; 
-f.document.write(string); 
-}) 
-$('.drzava img').hover(function()
-{    
-$(this).parent().find('audio')[0].play(); },
-function()
-{ 
-var audio = $(this).parent().find('audio')[0]; 
-audio.pause(); 
-audio.currentTime = 0; })
- }) 
-
-autor.html 
-
-<!DOCTYPE html> 
-<html> 
-<head>  
-  <title>Аутор</title>  
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" >  
-  <link rel="stylesheet" type="text/css" href="css/stilovi.css">
- </head> 
-<body>   
- <header>     
-   <h1>О аутору</h1><br>  
-  </header>  
-  <section>      
- <p class="uputstvo"> Назив веб апликације: "Србија и њени суседи" <br> Аутор: Пера Петровић<br> Школа: Електротехничка школа "Земун"<br> Е-маил: perapetrovic@gmail.com <br> Датум: 27.јун 2016. године      
-  </p>    
-</section>  
-  <nav>
-        <a href="index.html" >Почетна</a><br>       
- <a href="uputstvo.html" >Упутство</a><br>  
-  </nav> 
-</body> 
+<p id="srb1" onclick="prikazi(1)">Srbija</p>
+<p id="bos1" onclick="prikazi(7)">Bosna i Hercegovina</p>
+<p id="bug1" onclick="prikazi(4)">Bugarska</p>
+<p id="mak1" onclick="prikazi(5)">Makedonija</p>
+<p id="madj1" onclick="prikazi(2)">Madjarska</p>
+<p id="hrv1"onclick="prikazi(6)">Hrvatska</p>
+<p id="rum1" onclick="prikazi(3)">Rumunija</p>
+<p id="alb1" onclick="prikazi(9)">Albanija</p>
+<p id="cg1" onclick="prikazi(8)">Crna Gora</p>
+</body>
 </html>
 
- uputstvo.html 
-<!DOCTYPE html>
- <html> 
-<head>  
-  <title>Упутство</title> 
-   <meta http-equiv="content-type" content="text/html; charset=UTF-8" > 
-   <link rel="stylesheet" type="text/css" href="css/stilovi.css"> 
-</head> 
-<body>   
- <header>      
-  <h1>Упутство за коришћење веб апликације "Србија и њени суседи"</h1><br>  
-  </header>   
- <section>      
-  <p class="uputstvo">   Функционалност апликације "Србија и њени суседи":<br> При стартовању апликације, на почетној страници налази се позадина - географска карта Републике Србије са својим суседима, при чему Република Србија заузима централно место. За сваку од приказаних земаља на карти постављен је њен назив и слика заставе.<br> Кликом миша на назив земље отвара се прозор у коме се приказују основни подаци о тој земљи (главни град, број становника, површина ...).<br>Преласком миша преко заставе земље чује се неколико тактова химне те земље.      
-  </p>   
- </section>  
-  <nav>       
- <a href="index.html" >Почетна</a><br>      
-  <a href="autor.html"  >О аутору</a><br>  
-  </nav> 
-</body> 
-</html> 
 
-stilovi.css
+funkcionalnost.js
 
- h1{ text-align:center; color:blue; }
- *{ margin:0; padding:0; box-sizing:border-box; } 
-#wrapper{ width:100%; min-width:100%; max-width:100%; min-height:100vh; overflow:hidden; position:relative; } 
-#mapa{ width:100%; max-width:100%; min-width:100%; min-height:100vh; max-height:100vh; }
-.drzava {position:absolute;} 
-.drzava img{ width:150px; height:100px; } 
-.drzava h3{ margin:0; font-size:130%; text-align:center; color:blue; } 
-#srbija h3 { font-size:250%; color:red; } 
-#srbija{ left:38%; top:40%; } 
-#bosna{ left:10%; top:35%; } 
-#rumunija{ left:70%; top:15%; } 
-#bugarska{ right:12%; top:65%; } 
-#makedonija{ bottom:3%; left:52%; } 
-#makedonija img, 
-#albanija img, 
-#crnagora img, 
-#hrvatska img, 
-#madjarska img{ width:90px; height:40px; } 
-#albanija{ bottom:5%; right:60%; } 
-#crnagora{ bottom:22%; left:25%; } 
-#hrvatska{ top:12%; left:4%; } 
-#madjarska{ left:15%; top:1%; } 
-audio,source{display:none;}
+function pustiHimnu(zvuk)
+{
+	document.getElementById("himna").src='himne/'+zvuk+'Himna.mp3';
+	document.getElementById("himna").play();
+}
+
+function zaustaviHimnu()
+{
+	document.getElementById("himna").pause();
+}
+
+function prikazi(zemlja)
+{
+	switch(zemlja)
+	{
+        case 1: var p1=window.open('','prozor1','width=600,height=600');
+		p1.document.write('<h1>Srbija</h1><p>Glavni grad:... <br/>Broj stanovnika:...</p>');
+		break;
+		
+		case 2: var p2=window.open('','prozor2','width=600,height=600');
+		p2.document.write('<h1>Madjarska</h1><p>Glavni grad:... <br/>Broj stanovnika:...</p>');
+		break;
+		
+		case 3: var p3=window.open('','prozor3','width=600,height=600');
+		p3.document.write('<h1>Rumunija</h1><p>Glavni grad:... <br/>Broj stanovnika:...</p>');
+		break;
+		
+		case 4: var p4=window.open('','prozor4','width=600,height=600');
+		p4.document.write('<h1>Bugarska</h1><p>Glavni grad:... <br/>Broj stanovnika:...</p>');
+		break;
+		
+		case 5: var p5=window.open('','prozor5','width=600,height=600');
+		p5.document.write('<h1>Makedonija</h1><p>Glavni grad:... <br/>Broj stanovnika:...</p>');
+		break;
+		case 6: var p6=window.open('','prozor6','width=600,height=600');
+		p6.document.write('<h1>Hrvatska</h1><p>Glavni grad:... <br/>Broj stanovnika:...</p>');
+		break;
+		case 7: var p7=window.open('','prozor7','width=600,height=600');
+		p7.document.write('<h1>Bosna</h1><p>Glavni grad:... <br/>Broj stanovnika:...</p>');
+		break;
+		case 8: var p8=window.open('','prozor8','width=600,height=600');
+		p8.document.write('<h1>Crnja Gora</h1><p>Glavni grad:... <br/>Broj stanovnika:...</p>');
+		break;
+		case 9: var p9=window.open('','prozor9','width=600,height=600');
+		p9.document.write('<h1>Albanija</h1><p>Glavni grad:... <br/>Broj stanovnika:...</p>');
+		break;
+	}
+}
+
+
+stil.css
+
+
+#pocetna
+{
+	background-image:url('slike/mapa.png');
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	background-attachment:fixed;
+}
+h1
+{
+	text-align:center;
+}
+img
+{
+	width:90px;
+	height:50px;
+	position:fixed;
+}
+#srb
+{
+	left:550px;
+	top:250px;
+}
+#bos
+{
+	left:100px;
+	top:280px;
+}
+#hrv
+{
+	top:125px;
+	left:100px;
+}
+#cg
+{
+	bottom:150px;
+	left:250px;
+}
+#alb
+{
+	bottom:20px;
+	left:320px;
+}
+#mak
+{
+	bottom:10px;
+	right:400px;
+}
+#bug
+{
+	bottom:100px;
+	right:100px;
+}
+#rum
+{
+	top:150px;
+	right:200px;
+}
+#madj
+{
+	top:30px;
+	left:200px;
+}
+#srb1
+{
+	left:550px;
+	top:200px;
+	position:fixed;
+}
+#bos1
+{
+	left:100px;
+	top:230px;
+	position:fixed;
+}
+#hrv1
+{
+	top:80px;
+	left:100px;
+	position:fixed;
+}
+#cg1
+{
+	bottom:190px;
+	left:250px;
+	position:fixed;
+}
+#alb1
+{
+	bottom:65px;
+	left:320px;
+	position:fixed;
+}
+#mak1
+{
+	bottom:45px;
+	right:400px;
+	position:fixed;
+}
+#bug1
+{
+	bottom:150px;
+	right:100px;
+	position:fixed;
+}
+#rum1
+{
+	top:100px;
+	right:200px;
+	position:fixed;
+}
+#madj1
+{
+	top:-12px;
+	left:130px;
+	position:fixed;
+}
+
+p{
+	font-size:20px;
+	font-weight:bolder;
+}
