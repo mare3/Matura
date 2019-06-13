@@ -78,7 +78,6 @@ style.css
 text-align:right;}
 #procenat{width:100px; height:25px;  text-align:center; font-size:25px;  }
 
-
 funkcionalnost.js
 
 function prikazi()
