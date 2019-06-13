@@ -1,75 +1,146 @@
-﻿dizajn.css 
+Album.cs
 
-body{ background-color: lavender;} 
-h1 {color: Blue; text-align: center;} 
-img{width:200px; height:200px}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.IO;
 
-Katalog.aspx.cs
-using System; 
-using System.Collections.Generic; 
-using System.IO; 
-using System.Web.UI.WebControls; 
-namespace А13CDKatalog{    
-public partial class Katalog : System.Web.UI.Page{   
-     protected void Page_Load(object sender, EventArgs e){            
-if (!IsPostBack){            
-StreamReader f = new StreamReader(Server.MapPath("katalog.txt"));                
-List<CD> sviCDovi = CD.procitaj(f);                
-foreach (CD k in sviCDovi){//попуни ddlGodina са свим местима                   
- if (!ddlGodina.Items.Contains(new ListItem(k.godina.ToString()))) 
-ddlGodina.Items.Add(k.godina.ToString());               
- }                f.Close();      } }       
-
- protected void btnTrazi_Click(object sender, EventArgs e){
- StreamReader f = new StreamReader(Server.MapPath("katalog.txt"));           
- List<CD> sviCDovi = CD.procitaj(f);            
-List<CD> izabraniCDovi = new List<CD>();
- foreach (CD k in sviCDovi)
+namespace CdKatalog
 {
-if ((txtIzvodjac.Text == "" || k.izvodjac.Contains(txtIzvodjac.Text)) &&
- (txtAlbum.Text == "" || k.album.Contains(txtAlbum.Text)) && 
-(ddlZanr.SelectedValue == "сви жанрови" || (k.zanr.Contains(ddlZanr.SelectedValue)))&& 
-(ddlGodina.SelectedValue == "све године" || (k.godina.ToString() == ddlGodina.SelectedValue))&& 
-(txtIzdavac.Text == "" || k.izdavac.Contains(txtIzdavac.Text)))  
-              {                   
- izabraniCDovi.Add(k);        
-        }            }         
-   f.Close();
-            gvIzabrani.DataSource = izabraniCDovi;
-gvIzabrani.DataBind();} } }
+    public class Album
+    {
+        public string izvodjac { get;set;}
+        public string naziv { get; set; }
+        public string zanr { get; set; }
+        public int godina {get;set;}
+        public string izdavac { get; set; }
+        public string omot { get; set; }
+        public Album(string izvodjac,string naziv,string zanr,int godina,string izdavac, string omot)
+        {
+            this.izvodjac = izvodjac;
+            this.naziv = naziv;
+            this.zanr = zanr;
+            this.godina = godina;
+            this.izdavac = izdavac;
+            this.omot = omot;
+        }
+        public static List<Album> procitajAlbume(StreamReader f)
+        {
+            List<Album> albumi = new List<Album>();
 
-CD.cs 
+            while (!f.EndOfStream)
+            {
+                string[] podaci = f.ReadLine().Split('|');
+                Album a = new Album(podaci[0],podaci[1],podaci[2],Convert.ToInt32(podaci[3]),podaci[4],podaci[5]);
+                albumi.Add(a);
+            }
+            return albumi;
+        }
+    }
+}
+katalog.aspx.cs
 
-using System; 
-using System.Collections.Generic; 
-using System.IO; 
-namespace А13CDKatalog{   
- public class CD{
-public string izvodjac { get; set; }        
-public string album { get; set; }        
-public string zanr { get; set; }        
-public int godina { get; set; }        
-public string izdavac { get; set; }        
-public string slika { get; set; }        
-public CD(string izvodjac, string album, string zanr, int godina, string izdavac, string slika)
-{            
-this.izvodjac = izvodjac;            
-this.album = album;            
-this.zanr = zanr;            
-this.godina = godina;           
-this.izdavac = izdavac;            
-this.slika = slika;        
-}        
-public static List<CD> procitaj(StreamReader f){           
- List<CD> sviKorisnici = new List<CD>();            
-while (!f.EndOfStream){               
- string[] sviPodaci = f.ReadLine().Split('|');               
- CD k = new CD(sviPodaci[0], sviPodaci[1], sviPodaci[2],                        
-Convert.ToInt32(sviPodaci[3]), sviPodaci[4], sviPodaci[5]);                
-sviKorisnici.Add(k);     
-       }           
- return sviKorisnici;     
-   }    } } 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
+
+namespace CdKatalog
+{
+    public partial class katalog : System.Web.UI.Page
+    {
+        List<Album> albumi;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            StreamReader f = new StreamReader(Server.MapPath("katalog.txt"));
+            albumi = Album.procitajAlbume(f);
+            f.Close();
+           if (!IsPostBack)
+            {
+                DropDownList1.Items.Add("");
+                DropDownList2.Items.Add("");
+                foreach (Album a in albumi)
+                {
+                    if (!DropDownList1.Items.Contains(new ListItem(a.zanr)))
+                        DropDownList1.Items.Add(a.zanr);
+                    if (!DropDownList2.Items.Contains(new ListItem(a.godina.ToString())))
+                        DropDownList2.Items.Add(a.godina.ToString());
+                }
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            List<Album> pretraga = new List<Album>();
+            foreach (Album a in albumi)
+            {
+                bool odgovara = true;               
+                if (TextBox1.Text!="")
+                {
+                    if (!a.izvodjac.Contains(TextBox1.Text))
+                    {
+                        odgovara = false;
+                    }
+                }
+                if (TextBox2.Text != "")
+                {
+                    if (!a.naziv.Contains(TextBox2.Text))
+                    {
+                        odgovara = false;
+                    }
+
+                }      
+                if (DropDownList1.SelectedValue!="")
+                {
+                    
+                    if (a.zanr !=DropDownList1.SelectedValue)
+                    {
+                        odgovara = false;
+                    }                    
+                }
+                if (DropDownList2.SelectedValue!="")
+                {
+                    if (a.godina !=Convert.ToInt32(DropDownList2.SelectedValue))
+                    {
+                        odgovara = false;
+                    }
+                }
+                if (TextBox3.Text != "")
+                {
+                    if (!a.izdavac.Contains(TextBox3.Text))
+                    {
+                        odgovara = false;
+                    }
+                }                
+                if (odgovara)
+                    pretraga.Add(a);
+            }
+            GridView1.DataSource = pretraga;
+           GridView1.DataBind();
+        }
+    }
+}
+
+style.css
+body {background-color:Aqua;}
+p,h1{    text-align:center;}
+h1{    color:Navy;}
+.Grid{
+    margin:auto;
+    background-color:Yellow;
+}
+.Grid td{
+    text-align:center;
+}
+.Grid th{
+    color:Navy;
+    text-align:center;
+}
+
 
 katalog  .txt 
 Рибља чорба|Бувља пијаца|поп,рок|1982|ПГП-РТБ|~/slike/Riblja_corba-Buvlja_pijaca.jpg 
