@@ -1,89 +1,129 @@
-﻿using System;
-using System.Collections.Generic; 
-using System.Linq; using System.Web; 
-using System.Web.UI; using System.Web.UI.WebControls; 
-using System.IO; namespace A8{  
- public partial class prodavnica : System.Web.UI.Page{      
-  List<Proizvod> sviProizvodi;       
- protected void Page_Load(object sender, EventArgs e){ 
-           StreamReader f=new StreamReader(Server.MapPath("vebprodavnica.txt"));      
-      sviProizvodi = Proizvod.procitaj(f);  
-          f.Close();           
- if (!IsPostBack) {         
-       DropDownList1.Items.Add("");   
-             DropDownList3.Items.Add("");        
-        DropDownList4.Items.Add("");             
-   DropDownList5.Items.Add("");               
- foreach (Proizvod p in sviProizvodi){              
-    if (!DropDownList1.Items.Contains(new ListItem(p.proizvodjac)))                 
-       DropDownList1.Items.Add(p.proizvodjac);         
-         if (!DropDownList3.Items.Contains(new ListItem(p.procesor)))    
-                    DropDownList3.Items.Add(p.procesor);                
-  if (!DropDownList4.Items.Contains(new ListItem(p.kamera)))               
-         DropDownList4.Items.Add(p.kamera);                  
-if (!DropDownList5.Items.Contains(new ListItem(p.ekran.ToString()))) 
- DropDownList5.Items.Add(p.ekran.ToString());  }  }        }       
+Proizvod.cs  -- klasa
 
- protected void Button1_Click(object sender, EventArgs e){ 
-           List<Proizvod> pretraga = new List<Proizvod>();                    
- foreach (Proizvod p in sviProizvodi){                
-bool odgovara = true;                
-if (DropDownList1.SelectedValue != ""){                    
-if (p.proizvodjac != DropDownList1.SelectedValue)                        
-odgovara = false;                }               
- if (DropDownList2.SelectedValue != ""){                  
-  if (p.ram != DropDownList2.SelectedValue) odgovara = false;           
-     }                
-if (DropDownList3.SelectedValue != ""){                   
- if (p.procesor!= DropDownList3.SelectedValue)                        
-odgovara = false;                }                
-if (DropDownList4.SelectedValue != ""){                    
-if (p.kamera != DropDownList4.SelectedValue)                        
-odgovara = false;                }                
-if (DropDownList5.SelectedValue != ""){                    
-if (p.ekran!= Convert.ToDouble(DropDownList5.SelectedValue))                       
- odgovara = false;                }               
- if (odgovara) pretraga.Add(p);            }            
-GridView1.DataSource = pretraga;            
-GridView1.DataBind();  }    } }
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.IO;
 
-Proizvod.cs 
+namespace VebProdavnica
+{
+    public class Proizvod
+    {
+        public string sifra { get; set; }
+        public string naziv { get; set; }
+        public string proizvodjac { get; set; }
+        public string ram { get; set; }
+        public string procesor { get; set; }
+        public string kamera { get; set; }
+        public double ekran { get; set; }
+        public string slika { get; set; }
+        public int cena { get; set; }
 
-using System; 
-using System.Collections.Generic; 
-using System.Linq; using System.Web; 
-using System.IO; namespace A8{    
-public class Proizvod{        
-public string sifra { get; set; }       
- public string naziv { get; set; }        
-public string proizvodjac { get; set; }        
-public string ram { get; set; }        
-public string procesor { get; set; }        
-public string kamera { get; set; }        
-public double ekran { get; set; }        
-public string slika { get; set; }        
-public int cena { get; set; }        
-public Proizvod(string sifra, string naziv, string proizvodjac, string ram, string procesor, string kamera, double ekran, string slika, int cena){            this.sifra = sifra;            
-this.naziv = naziv;            
-this.proizvodjac = proizvodjac;            
-this.ram = ram;            
-this.procesor = procesor;            
-this.kamera = kamera;            
-this.ekran = ekran;            
-this.slika = slika;            
-this.cena = cena;        
-}        
-public static List<Proizvod> procitaj(StreamReader f){           
- List<Proizvod> proizvodi = new List<Proizvod>();            
-while (!f.EndOfStream){                
-string linija = f.ReadLine();                
-Proizvod p = new Proizvod(linija.Substring(0, 6), linija.Substring(6, 25), linija.Substring(31, 20), linija.Substring(51, 5).Trim(), linija.Substring(56, 15), linija.Substring(71, 10), Convert.ToDouble(linija.Substring(81, 5)), linija.Substring(91, 30), Convert.ToInt32(linija.Substring(121, 10)));                proizvodi.Add(p);          
-  }            
-return proizvodi; } } } 
+        public Proizvod(string sifra, string naziv, string proizvodjac, string ram, string procesor, string kamera, double ekran, string slika, int cena)
+        {
+            this.sifra = sifra;
+            this.naziv = naziv;
+            this.proizvodjac = proizvodjac;
+            this.ram = ram;
+            this.procesor = procesor;
+            this.kamera = kamera;
+            this.ekran = ekran;
+            this.slika = slika;
+            this.cena = cena;
+        }
+        
+        public static List<Proizvod> procitaj(StreamReader f)
+        {
+            List<Proizvod> proizvodi = new List<Proizvod>();
 
-vebprodavnica.txt 
+            while (!f.EndOfStream)
+            {
+                string podaci = f.ReadLine();
+               Proizvod p = new Proizvod(podaci.Substring(0, 6), podaci.Substring(6,25), podaci.Substring(31,20), podaci.Substring(51,5).Trim(), podaci.Substring(56,15), podaci.Substring(71,10), Convert.ToDouble(podaci.Substring(81,5)),podaci.Substring(91,30), Convert.ToInt32(podaci.Substring(121,10)));
+                proizvodi.Add(p);
+            }
+            return proizvodi;
+        }
+    }
+}
 
-12sg  Samsung Galaxy S9 Plus   Samsung             4GB  Octa-Core      12MP      5,8       ~/slike/slika1.jpg            116500    
-13sg  Samsung Galaxy S8        Samsung             4GB  Octa-Core      12MP      5,5       ~/slike/slika2.jpg             88500    
-22hw  Huawei Mate 10 Pro       Huawei              3GB  Quad-Core      10MP      5,5       ~/slike/slika3.jpg             78990    
-12ab  Nokia 3                  Nokia               1.5GBQuad-Core      8MP       5,0       ~/slike/slika4.jpg             39999   
+prodavnica.aspx.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
+
+namespace VebProdavnica
+{
+    public partial class vebProdavnica : System.Web.UI.Page
+    {
+        List<Proizvod> sviProizvodi = new List<Proizvod>();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            StreamReader f = new StreamReader(Server.MapPath("vebprodavnica.txt"));
+            sviProizvodi = Proizvod.procitaj(f);
+            f.Close();
+            if (!IsPostBack)
+            {
+                DropDownList1.Items.Add("");
+                DropDownList3.Items.Add("");
+                DropDownList4.Items.Add("");
+                DropDownList5.Items.Add("");
+                foreach (Proizvod p in sviProizvodi)
+                {
+                    if (!DropDownList1.Items.Contains(new ListItem(p.proizvodjac)))
+                        DropDownList1.Items.Add(p.proizvodjac);
+                    if (!DropDownList3.Items.Contains(new ListItem(p.procesor)))
+                        DropDownList3.Items.Add(p.procesor);
+                    if (!DropDownList4.Items.Contains(new ListItem(p.kamera)))
+                        DropDownList4.Items.Add(p.kamera);
+                    if (!DropDownList5.Items.Contains(new ListItem(p.ekran.ToString())))
+                        DropDownList5.Items.Add(p.ekran.ToString());
+                }
+            }
+           
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+		List<Proizvod> pretragaPrikaz = new List<Proizvod>();
+            foreach (Proizvod x in sviProizvodi)
+            {
+                bool odgovara = true;
+                
+                if (DropDownList1.SelectedValue!="")
+                {           
+                    if (x.proizvodjac!=DropDownList1.SelectedValue)                    
+                        odgovara = false;                    
+                }
+                if (DropDownList2.SelectedValue!="")
+                {
+                    if (x.ram!=DropDownList2.SelectedValue)
+                        odgovara = false;                
+                }
+               if (DropDownList3.SelectedValue != "")
+               {
+if (x.procesor!= DropDownList3.SelectedValue)
+ 
+               }
+               if (DropDownList4.SelectedValue != "")
+               {
+                   if (x.kamera == DropDownList4.SelectedValue)
+                       odgovara = false;                  
+               }
+               if (DropDownList5.SelectedValue != "")
+               {	
+if (x.ekran != Convert.ToDouble(DropDownList5.SelectedValue))
+                        odgovara = false;                   
+               }            
+                if (odgovara)
+                    pretragaPrikaz.Add(x);
+            }
+            GridView1.DataSource = pretragaPrikaz;
+            GridView1.DataBind();
+        }    }}
