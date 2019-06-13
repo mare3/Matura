@@ -1,87 +1,154 @@
-﻿WebService1.asmx.cs
+valute.txt
+21.2.2018|EUR|120,61
+21.2.2018|USD|103,71
+21.2.2018|CHF|109,00
+21.2.2018|GBP|134,52
+21.2.2018|AUD|81,88
+2.3.2018|EUR|120,80
+2.3.2018|USD|103,45
+2.3.2018|CHF|108,99
+28.2.2018|GBP|134,65
+1.3.2018|AUD|80,45
+1.3.2018|EUR|120,8
+3.3.2018|USD|102,74
+4.3.2018|EUR|119,6
+5.3.2018|EUR|118,03
+5.3.2018|CAD|74,51
+5.3.2018|HRK|15,88
 
-using System; 
-using System.Collections.Generic; 
-using System.IO; 
-using System.Web.Services; 
-namespace A10{     <summary>    /// Summary description for WebService1    /// </summary>    [WebService(Namespace = "http://tempuri.org/")]    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]    [System.ComponentModel.ToolboxItem(false)]    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-    // [System.Web.Script.Services.ScriptService]    
-public class WebService1 : System.Web.Services.WebService { 
-       [WebMethod]       
- public double ProcitajKursNaDan(DateTime Datum, string valuta){  
-          StreamReader f = new StreamReader(Server.MapPath("kurs.txt"));  
-          double kurs = -1.0;            
-while (!f.EndOfStream){            
-    string linija = f.ReadLine();               
- string[] podaci = linija.Split('|');              
-  if (podaci[0]== Datum.ToString()&&podaci[1]==valuta) { kurs = Convert.ToDouble(podaci[2]); }   
-         }         
-   f.Close();           
- return kurs;       
- }        
-[WebMethod]   
-    
- public bool UpisiKursNaDan(DateTime Datum,string valuta,double Kurs){         
-   bool uspesno = false;       
-     try {               
- string linija = Datum.ToString() + "|" + valuta + "|" + Kurs.ToString() +"\r\n";              
-  File.AppendAllText(Server.MapPath("kurs.txt"),linija);            
-    uspesno =true;   }          
-  catch (Exception e) { }      
-      return uspesno;        }   
-     [WebMethod]        
 
-public List<string> ProcitajSveValute(){           
- List<string> lista = new List<string>();            
-string[] sveLinije = File.ReadAllLines(Server.MapPath("kurs.txt"));            
-foreach (string linija in sveLinije) {                
-string[] podaci = linija.Split('|');                
-bool vecPostoji = false;                
-foreach (string valuta in lista) {                    
-if (valuta == podaci[1])
-{vecPostoji = true;
-} }                
-if (!vecPostoji) lista.Add(podaci[1]);            
-}            
-return lista;       
-}}}
+vebServis.asmx.cs
 
-Pregledkursa.aspx
+public class vebServis : System.Web.Services.WebService
+    {
 
- <title>Преглед курса</title>   
- <link href="stilovi.css" rel="stylesheet" /> 
+        public class Valuta
+        {
+            public DateTime datum { get; set; }
+            public string oznaka { get; set; }
+            public double kurs { get; set; }
 
-azuriranjeKursneListe.aspx
+            public Valuta(DateTime datum, string oznaka, double kurs)
+            {
+                this.datum = datum;
+                this.oznaka = oznaka;
+                this.kurs = kurs;
+            }
+            public static List<Valuta> procitajIzFajla(StreamReader f)
+            {
+                List<Valuta> svi = new List<Valuta>();
+                while (!f.EndOfStream)
+                {
+                    string[] p = f.ReadLine().Split('|');
+                    Valuta v = new Valuta(Convert.ToDateTime(p[0]),p[1],Convert.ToDouble(p[2]));
+                    svi.Add(v);
+                }
+                return svi;
+            }
+        }
+        [WebMethod]
+        public double ProcitajKursNaDan(DateTime Datum,string valuta)
+        {
+            double kurs;
+            StreamReader f = new StreamReader(Server.MapPath("valute.txt"));
+            List<Valuta> sve = Valuta.procitajIzFajla(f);
+            f.Close();
+            foreach (Valuta v in sve)
+            {
+                if (v.datum == Datum && v.oznaka == valuta)
+                {
+                    kurs = v.kurs;
+                    return kurs;
+                }
+            }
+            return 0;
+        }
+        [WebMethod]
+        public bool UpisiKursNaDan(DateTime Datum, string valuta,double Kurs)
+        {
+            File.AppendAllText(Server.MapPath("valute.txt"), Datum.Date.ToString("d") + "|" + valuta + "|" + Kurs + Environment.NewLine);
+            return true;
+            
+        }
+        [WebMethod]
+        public List<string> ProcitajSveValute()
+        {
+            List<string> oznakeValute = new List<string>();
+            StreamReader f=new StreamReader(Server.MapPath("valute.txt"));
+            List<Valuta> sve = Valuta.procitajIzFajla(f);
+            f.Close();
 
-<title>Ажурирање курсне листе</title>   
-<link href="stilovi.css" rel="stylesheet" /> 
+            foreach (Valuta v in sve)
+            {
+                if (!oznakeValute.Contains(v.oznaka))
+                    oznakeValute.Add(v.oznaka);
+            }
+            return oznakeValute;
+        }
+    }
 
-PregledKursa.aspx.cs
+pregled.aspx.cs
 
-using System; 
-namespace 
-testA10{    
-public partial class PregledKursa : System.Web.UI.Page{        
-protected void Page_Load(object sender, EventArgs e){            
-if (!IsPostBack){                
-localhost.WebService1 ws1 = new localhost.WebService1();                
-string[] lista = ws1.ProcitajSveValute();               
- DropDownListValute.DataSource = lista;                
-DropDownListValute.DataBind();            
-}}        
+localhost.vebServis servis = new localhost.vebServis();
+protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                
+                /*List<string> oznakeValuta = servis.ProcitajSveValute().ToList();
+                DropDownList1.DataSource = oznakeValuta;*/
+                DropDownList1.DataSource = servis.ProcitajSveValute();
+                DropDownList1.DataBind();
+            }
+        }
 
-protected void Button1_Click(object sender, EventArgs e){            
-localhost.WebService1 ws1 = new localhost.WebService1();           
- if (Calendar1.SelectedDate.ToString()== "01-Jan-01 00:00:00")
-{                
-lblKurs.Text = "Mорате селектовати датум!";}
-else
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            DateTime datum = Calendar1.SelectedDate.Date;
+            string valuta = DropDownList1.SelectedValue;
+            double kursNaDan = servis.ProcitajKursNaDan(datum,valuta);
+//II nacin u jednoj naredbi:
+// double kursNaDan =servis.ProcitajKursNaDan(Calendar1.SelectedDate.Date,DropDownList1.SelectedValue);
+            if (kursNaDan != 0)
+                TextBox1.Text = kursNaDan.ToString();
+            else
+                TextBox1.Text = "Ne postoji kurs!";
+        }
+
+
+azuriranje.aspx.cs
+
+localhost.vebServis servis = new localhost.vebServis();
+protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                DropDownList1.DataSource = servis.ProcitajSveValute();
+                DropDownList1.DataBind();
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            DateTime datum = Calendar1.SelectedDate.Date;
+            string valuta = DropDownList1.SelectedValue;
+            double kursNaDan = Convert.ToDouble(TextBox1.Text);
+            bool upis = servis.UpisiKursNaDan(datum,valuta,kursNaDan);
+
+//II nacin u jednoj naredbi:
+//bool upis = servis.UpisiKursNaDan(Calendar1.SelectedDate.Date,DropDownList1.SelectedValue,Convert.ToDouble(TextBox1.Text);
+            if (upis)
+                Label3.Text = "Uspesno azurirana kursna lista!";        
+        }
+
+
+ style.css
+body 
 {
-double kurs = ws1.ProcitajKursNaDan(Calendar1.SelectedDate, DropDownListValute.SelectedValue);               
- if (kurs == -1) lblKurs.Text = "За тај датум и ту валуту нема података...";
-
-                else lblKurs.Text = "Курс за " + DropDownListValute.SelectedValue + "=" + kurs.ToString() + "дин.";
-    } 
-   } 
-  } 
- } 
+    background-color:Aqua;
+}
+h1
+{
+    text-align:center;
+    color:Blue;
+}
